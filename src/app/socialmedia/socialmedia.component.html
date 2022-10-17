@@ -1,0 +1,82 @@
+
+<br>
+
+   <div class="container">
+
+    <br>
+
+    <ul>
+        <li>
+            <h1>BASIC INFO</h1>
+        </li>
+        <li>
+            <h1>MARKETING</h1>
+        </li>
+        <li>
+            <h1>SOCIAL MEDIA</h1>
+        </li>
+    </ul>
+
+    <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
+
+    <br>
+
+    <div class="row g-3">
+
+    <div class="col-sm-4">
+      <label for="age">*What is age group ideal target clients?</label>
+      <select class="form-control" id="age" required>
+        <option *ngFor="let number of age" [value]="number">{{number}}</option>
+      </select>
+    </div>
+
+    <div class="col-sm-4">
+      <label for="link">Link of your website</label>
+      <input type="text" class="form-control" name="link" [(ngModel)]="model.link"
+          #link="ngModel" />
+  </div>
+
+  <div class="col-sm-4">
+    <label for="marketing">Which marketing tactics currently use?</label>
+    <select class="form-control" id="marketing" required>
+      <option *ngFor="let types of marketing" [value]="types">{{types}}</option>
+    </select>
+  </div>
+
+  </div>
+
+  <br>
+
+  <div class="row g-3">
+
+    <div class="col-sm-4">
+      <label for="link">*Link of Facebook page</label>
+      <input type="text" class="form-control" name="fb" [(ngModel)]="model.fb"
+          #fb="ngModel" />
+      </div>
+
+
+  <div class="col-sm-4">
+    <label for="link">*C</label>
+    <input type="text" class="form-control" name="C" [(ngModel)]="model.C"
+        #C="ngModel" />
+</div>
+
+<div class="col-sm-4">
+  <label for="link">*Link of LinkedIn page</label>
+  <input type="text" class="form-control" name="linkedIn" [(ngModel)]="model.linkiedIn"
+      #linkedIn="ngModel" />
+</div>
+
+</div>
+
+<div class="buttons">
+<button type="submit" class="btn btn-outline-primary float-left mt-5">Cancel</button>  
+<button type="submit" class="btn btn-success float-right mt-5" routerLink="/final">Submit</button>
+<button type="submit" class="btn btn-primary float-right mr-4 mt-5" routerLink="/marketing">Prev</button>
+</div>
+
+
+
+
+

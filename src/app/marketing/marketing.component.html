@@ -1,0 +1,65 @@
+
+<br>
+
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+   <div class="container">
+
+    <br>
+
+    <ul>
+        <li>
+            <h1>BASIC INFO</h1>
+        </li>
+        <li>
+            <h1>MARKETING</h1>
+        </li>
+        <li>
+            <h1>SOCIAL MEDIA</h1>
+        </li>
+    </ul>
+
+    <mat-progress-bar mode="determinate" value="67"></mat-progress-bar>
+
+    <br>
+
+    <h3>Allocate percentage in 3 risk categories based on your interests</h3>
+
+    <div class="row g-3">
+
+        <div class="col-sm-4">
+            <label for="Moderate">*Moderate</label>
+            <input type="text" class="form-control" name="Moderate" [(ngModel)]="model.Moderate"
+            #Moderate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Moderate.invalid }"
+            required />
+            <div *ngIf="f.submitted && Moderate.invalid" class="invalid-feedback">
+                <div *ngIf="Moderate.errors?.['required']">Moderate percentage is required</div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <label for="Growth">*Growth</label>
+            <input type="text" class="form-control" name="Growth" [(ngModel)]="model.Growth"
+            #Growth="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Growth.invalid }"
+            required />
+            <div *ngIf="f.submitted && Growth.invalid" class="invalid-feedback">
+                <div *ngIf="Growth.errors?.['required']">Growth percentage is required</div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <label for="Aggressive growth">*Aggressive growth</label>
+            <input type="text" class="form-control" name="Aggressivegrowth" [(ngModel)]="model.Aggressivegrowth"
+            #Aggressivegrowth="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Aggressivegrowth.invalid }"
+            required />
+            <div *ngIf="f.submitted && Aggressivegrowth.invalid" class="invalid-feedback">
+                <div *ngIf="Aggressivegrowth.errors?.['required']">Aggressive growth percentage is required</div>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <button type="submit" class="btn btn-outline-primary float-left">Cancel</button>  
+    <button type="submit" class="btn btn-primary float-right" routerLink="/socialmedia">Next</button>
+    <button type="submit" class="btn btn-primary float-right mr-4" routerLink="/info">Prev</button>
