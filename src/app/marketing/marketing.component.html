@@ -1,8 +1,7 @@
 
 <br>
 
-<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-   <div class="container">
+<div class="container">
 
     <br>
 
@@ -24,42 +23,66 @@
 
     <h3>Allocate percentage in 3 risk categories based on your interests</h3>
 
+    <div class="register-form">
+
+      <form [formGroup]="percentage">
+
     <div class="row g-3">
 
         <div class="col-sm-4">
-            <label for="Moderate">*Moderate</label>
-            <input type="text" class="form-control" name="Moderate" [(ngModel)]="model.Moderate"
-            #Moderate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Moderate.invalid }"
-            required />
-            <div *ngIf="f.submitted && Moderate.invalid" class="invalid-feedback">
-                <div *ngIf="Moderate.errors?.['required']">Moderate percentage is required</div>
-            </div>
+            <div class="form-group">
+              <label>*Moderate</label>
+              <input #mod type="number" formControlName="amount" id="mod" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.amount.errors }" />
+              <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+                <div *ngIf="f.amount.errors.required">Moderate is required</div>
+              </div>
+        </div>
         </div>
 
         <div class="col-sm-4">
-            <label for="Growth">*Growth</label>
-            <input type="text" class="form-control" name="Growth" [(ngModel)]="model.Growth"
-            #Growth="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Growth.invalid }"
-            required />
-            <div *ngIf="f.submitted && Growth.invalid" class="invalid-feedback">
-                <div *ngIf="Growth.errors?.['required']">Growth percentage is required</div>
+          <div class="form-group">
+            <label>*Growth</label>
+            <input #gro type="number" id = "gro" formControlName="grow"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.grow.errors }" />
+            <div *ngIf="submitted && f.grow.errors" class="invalid-feedback">
+              <div *ngIf="f.grow.errors.required">Growth is required</div>
             </div>
-        </div>
+      </div>
+      </div>
 
-        <div class="col-sm-4">
-            <label for="Aggressive growth">*Aggressive growth</label>
-            <input type="text" class="form-control" name="Aggressivegrowth" [(ngModel)]="model.Aggressivegrowth"
-            #Aggressivegrowth="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Aggressivegrowth.invalid }"
-            required />
-            <div *ngIf="f.submitted && Aggressivegrowth.invalid" class="invalid-feedback">
-                <div *ngIf="Aggressivegrowth.errors?.['required']">Aggressive growth percentage is required</div>
-            </div>
+      <div class="col-sm-4">
+            <div class="form-group">
+              <label>*Aggressive growth</label>
+              <input  #agg type="number" formControlName="agg" id="agg"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.agg.errors }"/>
+              <div *ngIf="submitted && f.agg.errors" class="invalid-feedback">
+                <div *ngIf="f.agg.errors.required">Aggressive growth is required</div>
+              </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="percentage.valid">
+
+      <div class="donut">
+        <div style="display: block">
+        <canvas baseChart
+
+                    [data]="demodoughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [chartType]="doughnutChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+        </div>
         </div>
 
     </div>
 
-    <br>
-
-    <button type="submit" class="btn btn-outline-primary float-left">Cancel</button>  
-    <button type="submit" class="btn btn-primary float-right" routerLink="/socialmedia">Next</button>
+     <div class = "button">
+    <button type="submit" class="btn btn-outline-primary float-left" (click)="openDialog('3000ms', '1500ms')">Cancel</button>  
+    <button type="submit" class="btn btn-primary float-right" [disabled] ="!percentage.valid" (click)="onaddDetails()" routerLink="/socialmedia">Next</button>
     <button type="submit" class="btn btn-primary float-right mr-4" routerLink="/info">Prev</button>
+    </div>
+
+    <br><br>
+  </form>
+    </div>

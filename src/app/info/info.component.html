@@ -1,7 +1,5 @@
-
 <br>
 
-<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
    <div class="container">
 
     <br>
@@ -22,89 +20,115 @@
 
     <br>
 
-    <div class="row g-3">
+    <div class="register-form">
+      <form [formGroup]="form"> 
+
+<div class = "container">
+<div class="row g-3">
 
         <div class="col-sm-4">
-            <label for="firstName">*First Name</label>
-            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName"
-            #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }"
-            required />
-            <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
-                <div *ngIf="firstName.errors?.['required']">First Name is required</div>
+        <div class="form-group">
+          <label>*First Name</label>
+          <input
+            type="text"
+            formControlName="firstname"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }"
+          />
+          <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+            <div *ngIf="f.firstname.errors.required">Firstname is required</div>
+            <div *ngIf="f.firstname.errors.minlength">
+              Username must be at least 6 characters
             </div>
+            <div *ngIf="f.firstname.errors.maxlength">
+              Username must not exceed 20 characters
+            </div>
+          </div>
         </div>
-
-
-        <div class="col-sm-4">
-            <label for="middleName">Middle Name</label>
-            <input type="text" class="form-control" name="middleName" [(ngModel)]="model.middleName"
-                #middleName="ngModel" />
-            <div *ngIf="f.submitted && middleName.invalid" class="invalid-feedback">
-            </div>
-        </div>
-
-        <div class="col-sm-4">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName"
-                #lastName="ngModel" />
-            <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div class="row g-3">
-
-        <div class="col-sm-4">
-            <label for="birthday">*Birthday</label>
-            <div class="md-form md-outline input-with-post-icon datepicker">
-                <input type="date" class="form-control" name="Birthday" [(ngModel)]="model.Birthday"
-            #date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && date.invalid }"
-            required />
-            <div *ngIf="f.submitted && date.invalid" class="invalid-feedback">
-                <div *ngIf="date.errors?.['required']">Birthday is required</div>
-            </div>
-            </div>
         </div>
 
         <div class="col-sm-4">
-            <label for="email">*Email</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
-            <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
-                    <div *ngIf="email.errors?.['required']">Email is required</div>
-                    <div *ngIf="email.errors?.['email']">Email must be a valid email address</div>
-            </div>
+          <div class="form-group">
+            <label for="Middle">Middle Name</label>
+            <textarea id="Middle" cols="1" rows="1"  class="form-control"></textarea>
+        </div>
         </div>
 
         <div class="col-sm-4">
-            <label for="email">*Communication Email</label>
-            <input type="text" class="form-control" name="mail" [(ngModel)]="model.mail" #mail="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && mail.invalid }" required email />
-                <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
-                    <div *ngIf="email.errors?.['required']">Email is required</div>
-                    <div *ngIf="email.errors?.['email']">Email must be a valid email address</div>
-                </div>
+          <div class="form-group">
+            <label for="Last">Last Name</label>
+            <textarea id="Last" cols="1" rows="1"  class="form-control"></textarea>
         </div>
-    </div>
-
-    <br>
-
-    <div class="form-group">
-        <label for="Interests">Interests</label>
-        <textarea id="interests" cols="10" rows="3"  class="form-control"></textarea>
-    </div>
-
-    <br>
-
-
-<button type="submit" class="btn btn-outline-primary float-left" (click)="openDialog('3000ms', '1500ms')">Cancel</button>  
-<button type="submit" class="btn btn-primary float-right" routerLink="/marketing">Next</button>
-
-
-
+        </div>
 
 </div>
+
+<div class = "row g-3">
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label>*Birthday</label>
+      <div class="md-form md-outline input-with-post-icon datepicker">
+      <input
+        type="date"
+        formControlName="Birthday"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.Birthday.errors }"
+      />
+      <div *ngIf="submitted && f.Birthday.errors" class="invalid-feedback">
+        <div *ngIf="f.Birthday.errors.required">Birthday is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label>*Email</label>
+      <input
+        type="text"
+        formControlName="email"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+      />
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.email">Email is invalid</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label>*Communication Email</label>
+      <input
+        type="text"
+        formControlName="cemail"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.cemail.errors }"
+      />
+      <div *ngIf="submitted && f.cemail.errors" class="invalid-feedback">
+        <div *ngIf="f.cemail.errors.required">Communication Email is required</div>
+        <div *ngIf="f.cemail.errors.cemail">Communication Email is invalid</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<br>
+
+<div class="form-group">
+    <label for="Interests">Interests</label>
+    <textarea id="interests" cols="10" rows="3"  class="form-control"></textarea>
+</div>
+
+<br>
+<button type="click" class="btn btn-outline-primary float-left" (click)="openDialog('3000ms', '1500ms')">Cancel</button>  
+<button type="submit" class="btn btn-primary float-right" [disabled]="!form.valid" (click)="onaddDetails()" routerLink="/marketing">Next</button>
+</div>
+
+
+
 
 

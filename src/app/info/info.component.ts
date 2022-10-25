@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators , AbstractControl , FormControl } from '@angular/forms';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-info',
@@ -9,7 +10,10 @@ import { RouterLink } from '@angular/router';
 })
 export class InfoComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) {}
+  form: FormGroup;
+  submitted = false;
+
+  constructor(public dialog: MatDialog,private formBuilder: FormBuilder, private router : Router) {}
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DialogAnimationsExampleDialog, {
@@ -19,12 +23,41 @@ export class InfoComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
+    this.form = this.formBuilder.group(
+      {
+        firstname: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20)
+          ]
+        ],
+        Birthday : [
+          '' ,
+          [
+            Validators.required
+          ]
+        ],
+        email: ['', [Validators.required, Validators.email]],
+        cemail: ['', [Validators.required, Validators.email]],
+      }
+    );
+
   }
 
-  model: any = {};
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
+  }
 
+  onaddDetails(){
 
+    if(this.form.valid){
+    this.router.navigate(['/marketing']);
+        }
+     }
 }
 
 @Component({
@@ -32,10 +65,13 @@ export class InfoComponent implements OnInit {
   templateUrl: 'dialog-animations-example-dialog.html',
 })
 export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, private router : Router) {}
 
-  onNoClick(): void {
+  onClick(){
+    this.router.navigate(['/info']);
     this.dialogRef.close();
   }
 
+
 }
+

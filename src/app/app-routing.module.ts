@@ -6,13 +6,14 @@ import { InfoComponent } from './info/info.component';
 import { MarketingComponent } from './marketing/marketing.component';
 import { SocialmediaComponent } from './socialmedia/socialmedia.component';
 
+
 const routes: Routes = [
 
  {path : '', component : InfoComponent},
  {path : 'info', component:InfoComponent},
  {path:'marketing', component:MarketingComponent},
  {path:'socialmedia' , component:SocialmediaComponent} ,
- {path:'final', component:FinalComponent}
+ {path:'final', component:FinalComponent} 
 
 ];
 

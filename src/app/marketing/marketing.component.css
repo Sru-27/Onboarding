@@ -12,3 +12,15 @@ h1{
   padding-left: 130px;
   font-size: xx-large;
 }
+
+.button {
+  padding-top: 250px;
+}
+
+.donut {
+  width: 400px;
+  height: 50px;
+  position: absolute;
+  top: 55%;
+  left: 35%;
+}
