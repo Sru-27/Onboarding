@@ -1,28 +1,46 @@
-import { Component, OnInit , Input, Output } from '@angular/core';
-import { Router , RouterModule , Routes} from '@angular/router';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { FormBuilder, FormGroup, Validators , AbstractControl , FormControl } from '@angular/forms';
-import { BaseChartDirective } from 'ng2-charts';
-import { ChartData, ChartType } from 'chart.js';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
+import { ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-marketing',
   templateUrl: './marketing.component.html',
-  styleUrls: ['./marketing.component.css']
+  styleUrls: ['./marketing.component.css'],
 })
 export class MarketingComponent implements OnInit {
+  percentage: FormGroup;
+  submitted: false;
 
-  percentage : FormGroup;
-  submitted : false;
+  amount: number = 0;
+  grow: number = 0;
+  agg: number = 0;
 
-  amount : number = 20;
-  grow: number = 30;
-  agg: number = 40;
+  validform = false;
+  public doughnutChartType: ChartType = 'doughnut';
+  public doughnutChartLabels: string[] = [
+    'Moderate',
+    'Growth',
+    'Aggressive Growth',
+  ];
+  public demodoughnutChartData: number[] = [this.amount, this.grow, this.agg];
 
-  constructor(public dialog: MatDialog,public formBuilder:FormBuilder ,private router : Router){}
+  constructor(
+    public dialog: MatDialog,
+    public formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
     this.dialog.open(DialogAnimationsExampleDialog, {
       width: '250px',
       enterAnimationDuration,
@@ -32,45 +50,48 @@ export class MarketingComponent implements OnInit {
 
   ngOnInit() {
     this.percentage = this.formBuilder.group({
-     amount : ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-     grow : ['', [Validators.required, Validators.pattern(/^[.\d]+$/)]] ,
-     agg : ['', [Validators.required, Validators.pattern(/^[.\d]+$/)]],
-    }, {validator: this.myValidator})
+      amount: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      grow: ['', [Validators.required, Validators.pattern(/^[.\d]+$/)]],
+      agg: ['', [Validators.required, Validators.pattern(/^[.\d]+$/)]],
+    });
   }
 
-  myValidator(group: FormGroup) {
+  // myValidator(group: FormGroup) {
+  //   let sum = 0;
+  //   for (let a in group.controls) {
+  //     sum += group.get([a]).value;
+  //   }
+  //   return sum !== 100 ? { notValid: true } : null;
+  // }
+
+  myValidator1() {
+    this.validform = false;
     let sum = 0;
-    for(let a in group.controls) {
-      sum += group.get([a]).value;
+    if (this.percentage.valid) {
+      const formdata = this.percentage.value;
+      sum =
+        parseInt(formdata['amount']) +
+        parseInt(formdata['agg'] + parseInt(formdata['grow']));
+      if (sum == 100) {
+        this.amount = parseInt(formdata['amount']);
+        this.grow = parseInt(formdata['grow']);
+        this.agg = parseInt(formdata['agg']);
+        this.validform = true;
+        this.demodoughnutChartData = [this.amount, this.grow, this.agg]; 
+      }
     }
-    console.log(sum > 100)
-    return sum !== 100 ? { notValid: true} : null
+    return this.validform;
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.percentage.controls;
   }
 
-  onaddDetails(){
-
-    if(this.percentage.valid){
-    this.router.navigate(['/socialmedia']);
-        }
-     }
-
-     public doughnutChartLabels:string[] = ['Moderate', 'Growth', 'Aggressive Growth'];
-     public demodoughnutChartData:number[] = [this.amount , this.grow, this.agg]; // this.f.amount.value
-     public doughnutChartType: ChartType = 'doughnut';
-
-      // events
-      public chartClicked(e:any):void {
-        console.log(e);
-      }
-
-      public chartHovered(e:any):void {
-        console.log(e);
-      }
-
+  oncomplete() {
+    if (this.percentage.valid) {
+      this.router.navigate(['/socialmedia']);
+    }
+  }
 }
 
 @Component({
@@ -78,11 +99,13 @@ export class MarketingComponent implements OnInit {
   templateUrl: 'dialog-animation-example-dialog.html',
 })
 export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, private router : Router) {}
+  constructor(
+    public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>,
+    private router: Router
+  ) {}
 
-  onClick(){
+  onClick() {
     this.router.navigate(['/info']);
     this.dialogRef.close();
   }
-
 }

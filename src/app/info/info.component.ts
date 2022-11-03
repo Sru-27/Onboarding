@@ -1,21 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators , AbstractControl , FormControl } from '@angular/forms';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { Router, RouterLink } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
-  styleUrls: ['./info.component.css']
+  styleUrls: ['./info.component.css'],
 })
 export class InfoComponent implements OnInit {
-
   form: FormGroup;
   submitted = false;
+  title = 'Onboarding';
 
-  constructor(public dialog: MatDialog,private formBuilder: FormBuilder, private router : Router) {}
+  constructor(
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    public router: Router
+  ) {}
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
     this.dialog.open(DialogAnimationsExampleDialog, {
       width: '250px',
       enterAnimationDuration,
@@ -23,41 +35,29 @@ export class InfoComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
-    this.form = this.formBuilder.group(
-      {
-        firstname: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20)
-          ]
+    this.form = this.formBuilder.group({
+      firstname: [
+        '',
+        [
+          Validators.required,
         ],
-        Birthday : [
-          '' ,
-          [
-            Validators.required
-          ]
-        ],
-        email: ['', [Validators.required, Validators.email]],
-        cemail: ['', [Validators.required, Validators.email]],
-      }
-    );
-
+      ],
+      Birthday: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      cemail: ['', [Validators.required, Validators.email]],
+    });
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
-  onaddDetails(){
-
-    if(this.form.valid){
-    this.router.navigate(['/marketing']);
-        }
-     }
+  onaddDetails() {
+    if (this.form.valid) {
+      this.router.navigate(['/marketing']);
+    }
+  }
 }
 
 @Component({
@@ -65,13 +65,13 @@ export class InfoComponent implements OnInit {
   templateUrl: 'dialog-animations-example-dialog.html',
 })
 export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, private router : Router) {}
+  constructor(
+    public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>,
+    public router: Router
+  ) {}
 
-  onClick(){
+  onClick() {
     this.router.navigate(['/info']);
     this.dialogRef.close();
   }
-
-
 }
-
