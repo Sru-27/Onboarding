@@ -106,6 +106,13 @@ it(`should navigate to nocustomer`, inject([Router], (routerSpy: Router) => {
   expect(component.oncomplete).not.toContain(['/marketing']);
 }));
 
+it('ifcase', () => {
+  component.percentage.controls.amount.setValue('30');
+  component.percentage.controls.grow.setValue('30');
+  component.percentage.controls.agg.setValue('40');
+  expect(component.myValidator1()).not.toBeTruthy();
+});
+
 it('should call myValidator1()',()=>{
   spyOn(component,'myValidator1').and.callThrough();
   component.myValidator1();
@@ -116,10 +123,6 @@ it('dialog should be closed after onClick()', () => {
   let spy = spyOn(dialog.dialogRef, 'close').and.callThrough();
   dialog.onClick();
   expect(spy).toHaveBeenCalled();
-});
-
-it('ifcase', () => {
-   
 });
 
 });
