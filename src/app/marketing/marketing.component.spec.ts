@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed , waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed ,inject } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -10,6 +10,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 describe('MarketingComponent', () => {
   let component: MarketingComponent;
@@ -17,6 +18,7 @@ describe('MarketingComponent', () => {
   let el: DebugElement;
   let dialog : DialogAnimationsExampleDialog;
   let dialogfixture : ComponentFixture<DialogAnimationsExampleDialog>;
+
   const dialogMock = {
     close: () => { }
     };
@@ -90,16 +92,34 @@ it('should call onaddDetails method', () => {
   expect(component.oncomplete).not.toHaveBeenCalled();
 });
 
+it('should have f', () => {​​​​​​
+  component.f;
+ expect(component.f).toBeDefined();
+})
+
+it(`should navigate to nocustomer`, inject([Router], (routerSpy: Router) => {
+  component.percentage.controls.amount.setValue('30');
+  component.percentage.controls.grow.setValue('30');
+  component.percentage.controls.agg.setValue('40');
+  expect(component.percentage.valid).toBeTruthy();
+  component.oncomplete();
+  expect(component.oncomplete).not.toContain(['/marketing']);
+}));
+
 it('should call myValidator1()',()=>{
   spyOn(component,'myValidator1').and.callThrough();
   component.myValidator1();
   expect(component.myValidator1).toHaveBeenCalled()
 })
 
-it('dialog should be closed after onYesClick()', () => {
+it('dialog should be closed after onClick()', () => {
   let spy = spyOn(dialog.dialogRef, 'close').and.callThrough();
   dialog.onClick();
   expect(spy).toHaveBeenCalled();
+});
+
+it('ifcase', () => {
+   
 });
 
 });

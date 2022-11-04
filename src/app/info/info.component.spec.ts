@@ -1,8 +1,9 @@
 import {
   ComponentFixture,
-  TestBed,
+  TestBed,inject
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -44,6 +45,7 @@ describe('InfoComponent', () => {
           provide: MatDialogRef,
           useValue: dialogMock,
         },
+
       ],
     }).compileComponents();
 
@@ -118,6 +120,16 @@ it('dialog should be closed after onYesClick()', () => {
   dialog.onClick();
   expect(spy).toHaveBeenCalled();
 });
+
+it(`should navigate to nocustomer`, inject([Router], (routerSpy: Router) => {
+  component.form.controls.firstname.setValue('Sruthi');
+  component.form.controls.email.setValue('murali@gmail.com');
+  component.form.controls.cemail.setValue('shru@gmail.com');
+  component.form.controls.Birthday.setValue('27.12.2000');
+  expect(component.form.valid).toBeTruthy();
+  component.onaddDetails();
+  expect(component.onaddDetails).not.toContain(['/marketing']);
+}));
 
 });
 

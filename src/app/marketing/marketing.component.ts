@@ -68,16 +68,16 @@ export class MarketingComponent implements OnInit {
     this.validform = false;
     let sum = 0;
     if (this.percentage.valid) {
-      const formdata = this.percentage.value;
-      sum =
-        parseInt(formdata['amount']) +
-        parseInt(formdata['agg'] + parseInt(formdata['grow']));
+     const formdata = this.percentage.value;
+     sum =
+       parseInt(formdata['amount']) +
+       parseInt(formdata['agg'] + parseInt(formdata['grow']));
       if (sum == 100) {
         this.amount = parseInt(formdata['amount']);
         this.grow = parseInt(formdata['grow']);
         this.agg = parseInt(formdata['agg']);
         this.validform = true;
-        this.demodoughnutChartData = [this.amount, this.grow, this.agg]; 
+        this.demodoughnutChartData = [this.amount, this.grow, this.agg];
       }
     }
     return this.validform;

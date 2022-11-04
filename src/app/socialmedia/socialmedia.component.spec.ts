@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed , fakeAsync , tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed , inject } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {By} from '@angular/platform-browser';
@@ -86,12 +86,17 @@ describe('SocialmediaComponent', () => {
     expect(openDialogSpy).toHaveBeenCalled();
 });
 
+it('should have f', () => {​​​​​​
+  component.f;
+ expect(component.f).toBeDefined();
+})
+
 it('submitted initially to be false', () => {
   component.oncancel();
   expect(component.submitted).not.toBeTruthy();
 });
 
-it('should call onaddDetails method', () => {
+it('should call oncancel method', () => {
   spyOn(component, 'oncancel');
   let button = fixture.debugElement.query(By.css('button')).nativeElement;
   button.click();
@@ -103,5 +108,16 @@ it('dialog should be closed after onYesClick()', () => {
   dialog.onClick();
   expect(spy).toHaveBeenCalled();
 });
+
+it(`should navigate to nocustomer`, inject([Router], (routerSpy: Router) => {
+  component.finalForm.controls.age.setValue('10-20');
+  component.finalForm.controls.c.setValue('abc');
+  component.finalForm.controls.url.setValue('https://www.edu.com');
+  component.finalForm.controls.link.setValue('https://www.education.com');
+  component.finalForm.controls.mart.setValue('Email Marketing');
+  expect(component.finalForm.valid).toBeTruthy();
+  component.oncancel();
+  expect(component.oncancel).not.toContain(['/marketing']);
+})); 
 
 });
